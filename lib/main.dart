@@ -4,46 +4,39 @@ void main() {
   runApp(FlutterApp());
 }
 
-class FlutterApp extends StatelessWidget {
+class FlutterApp extends StatefulWidget {
   const FlutterApp({Key? key}) : super(key: key);
+
+  @override
+  _FlutterAppState createState() => _FlutterAppState();
+}
+
+class _FlutterAppState extends State<FlutterApp> {
+  bool _showText = false;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.blueAccent,
-        appBar: AppBar(
-          title: Text('Flutter App'),
-        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'بکگراند اینجا',
-                style: TextStyle(fontSize: 24, color: Colors.red),
-              ),
-              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('سلام دنیا'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('بستن'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  setState(() {
+                    _showText = true;
+                  });
                 },
-                child: Text('اضافه کردن متن'),
+                child: const Text('Press Me'),
+              ),
+              const SizedBox(height: 20),
+              Visibility(
+                visible: _showText,
+                child: Container(
+                  color: Colors.purple, // رنگ بنفش
+                  child: const Text('Hello World'),
+                ),
               ),
             ],
           ),
